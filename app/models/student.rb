@@ -5,7 +5,6 @@ class Student
   field :student_class, type: String
   field :grade, type: String
   field :subjects, type: Hash
-
   validates_presence_of(:name, :student_class, :grade, :subjects)
 
   validate :subject_values
@@ -13,8 +12,9 @@ class Student
   private
 
   def subject_values
-    subjects.each_value do |sub|
-      errors.add(:subjects, 'enter a valid percentage') unless sub.is_a?(Numeric)
+    subjects.each do |key, value|
+      errors.add(:subjects, 'choose correct subject(s)') unless (key == "maths" || key == "english"|| key == "science")
+      errors.add(:subjects, 'enter a valid percentage') unless value.is_a?(Numeric)
     end
   end
 end

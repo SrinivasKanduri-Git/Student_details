@@ -8,7 +8,7 @@ before_action :find_student, only: %i[show update download destroy]
 
   def download
     stu = @student
-    @pdf = Prawn::Document.generate("#{stu.name}_details.pdf") do
+    pdf = Prawn::Document.generate("#{stu.name}_details.pdf") do
       text 'Student details:', style: :bold, size: 20
       text "Name: #{stu.name}"
       text "Class: #{stu.student_class}"
@@ -19,7 +19,7 @@ before_action :find_student, only: %i[show update download destroy]
       end
       table(sub)
     end
-    send_data @pdf, filename: "#{@student.name}_details.pdf", type: 'application/pdf', disposition: 'inline'
+    send_data pdf, filename: "#{@student.name}_details.pdf", type: 'application/pdf', disposition: 'inline'
   end
 
   def index
@@ -34,7 +34,6 @@ before_action :find_student, only: %i[show update download destroy]
       end
       table(stu_table, header: true) do
         row(0).font_style = :bold
-        row(0).font_size = 16
         row(0).background_color = 'cccccc'
         column(0).align = :center
       end
@@ -69,7 +68,6 @@ before_action :find_student, only: %i[show update download destroy]
   def find_student
     @student = Student.find(params[:id])
   end
-
   def student_params
     params.require(:student).permit(:name, :student_class, :grade, subjects: {})
   end

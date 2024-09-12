@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      uri: mongodb+srv://srinivaskanduri03:Srinivas%40db03@cluster0.epww9.mongodb.net/student_details_db?authSource=admin
+      options:
+      
